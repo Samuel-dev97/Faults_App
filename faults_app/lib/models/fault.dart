@@ -1,5 +1,5 @@
 class Fault {
-  final int id;
+  int id;
   final String title;
   final String description;
 

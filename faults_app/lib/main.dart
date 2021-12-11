@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:faults_app/api/api.dart';
 import 'package:provider/provider.dart';
+import 'screens/addFault.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,18 +32,33 @@ class HomePage extends StatelessWidget {
     final faultP = Provider.of<FaultProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Faults App'),
+        title: Text('ATM  Faults'),
       ),
       body: ListView.builder(
+        shrinkWrap: true,
         itemCount: faultP.faults.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
+              trailing: IconButton(
+                  icon: Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    faultP.deleteFault(faultP.faults[index]);
+                  }),
               title: Text(faultP.faults[index].title),
               subtitle: Text(
                 (faultP.faults[index].description),
               ));
         },
       ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(
+            Icons.add,
+            size: 30,
+          ),
+          onPressed: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (ctx) => AddFaultScreen()));
+          }),
     );
   }
 }
